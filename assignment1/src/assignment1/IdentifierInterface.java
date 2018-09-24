@@ -1,9 +1,9 @@
 package assignment1;
 
 public interface IdentifierInterface {
-	/*	Elements: characters
-	 * 	Structure: linear
-	 * 	Domain: alphanumeric
+	/*	Elements: Characters
+	 * 	Structure: Linear
+	 * 	Domain: Alphanumeric
 	 * 	
 	 * 	Constructors:
 	 * 
