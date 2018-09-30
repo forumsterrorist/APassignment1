@@ -1,9 +1,9 @@
 package assignment1;
 
 public interface SetInterface {
-	/*	Elements: Objects
+	/*	Elements: Identifier objects
 	 * 	Structure: Unstructured
-	 * 	Domain: Objects
+	 * 	Domain: Identifier objects
 	 * 
 	 * 	Constructors:
 	 * 
@@ -11,38 +11,42 @@ public interface SetInterface {
 	 * 	PRE - 
 	 * 	POST - A new empty Set is created.
 	 * 
-	 * 	SetInterface(Identifier first);
+	 * 	SetInterface(IdentifierInterface first);
 	 * 	PRE - 
 	 * 	POST - A new Set is created with the given Identifier object as an element.
+	 * 
+	 * 	SetInterface(SetInterface set);
+	 * 	PRE - The input Set contains at least one Identifier object.
+	 * 	POST - A new Set is created, containing the contents of the input Set.
 	 */	
 	
 	void init();
 	/*	PRE - 
-	 * 	POST - The Set is initialized.
+	 * 	POST - The Set is initialized to the empty set.
 	 */
 	
 	void add(Identifier input);
-	/*	PRE - The Set has been initialized.
-	 * 	POST - The input Identifier object is added to the Set.
+	/*	PRE - The number of elements within the set is less than 20.
+	 * 	POST - The input Identifier object is added to the Set. If the Identifier already exists, then it is not added.
 	 */
 	
-	Identifier[] get();
-	/*	PRE - The Set has been initialized.
-	 * 	POST - An array of Identifier objects is returned, containing all elements of the Set.
-	 */
-	
-	Identifier getAt(int i);
+	Identifier get();
 	/*	PRE - The Set contains at least one object.
-	 * 	POST - The element at the given index is returned.
+	 * 	POST - The last element added is returned.
+	 */
+	
+	void remove(Identifier input);
+	/*	PRE - The given Identifier exists in the set.
+	 * 	POST - Removes the given Identifier from the set.
 	 */
 	
 	int size();
-	/*	PRE - The Set has been initialized. 
+	/*	PRE - 
 	 * 	POST - Returns the number of elements in the Set.
 	 */
 	
 	boolean equals(Set input);
-	/*	PRE - Both the Set and the input Set have been initialized.
+	/*	PRE - 
 	 *	POST - Returns true if both Sets contain the same elements and false otherwise. 
 	 */
 	
@@ -51,22 +55,22 @@ public interface SetInterface {
 	 *	POST - Returns true if the input is contained within the Set and false otherwise. 
 	 */
 	
-	Set union(Set input);
-	/*	PRE - Both the Set and the input Set have been initialized.
+	SetInterface union(Set input);
+	/*	PRE - The sum of the sizes of each Set does not exceed 20.
 	 *	POST - Returns a Set containing the union of the input Set and this Set. 
 	 */
 	
-	Set intersection(Set input);
+	SetInterface intersection(Set input);
 	/*	PRE - Both the Set and the input Set have been initialized.
 	 *	POST - Returns a Set containing the intersection of the input Set and this Set. 
 	 */
 	
-	Set difference(Set input);
+	SetInterface difference(Set input);
 	/*	PRE - Both the Set and the input Set have been initialized.
 	 *	POST - Returns a Set containing the difference of the input Set and this Set. 
 	 */
 	
-	Set symmetricDifference(Set input);
+	SetInterface symmetricDifference(Set input);
 	/*	PRE - Both the Set and the input Set have been initialized.
 	 *	POST - Returns a Set containing the symmetric difference of the input Set and this Set. 
 	 */
