@@ -21,7 +21,7 @@ public class main{
     }
 
 
-    private boolean inputContainsCorrectSet(Scanner input, Set set) {
+	private boolean inputContainsCorrectSet(Scanner input, Set set) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -44,7 +44,6 @@ public class main{
 
 
 	private void calculateAndGiveOutput(Set set1, Set set2) {
-		// TODO Auto-generated method stub
 		
 	}
 }

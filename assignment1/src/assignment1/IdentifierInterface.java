@@ -9,11 +9,12 @@ public interface IdentifierInterface {
 	 * 
 	 * 	Identifier();
 	 * 	PRE - 
-	 * 	POST - A new empty Identifier object is created.
+	 * 	POST - A new Identifier object is created of length 1, starting with a letter.
 	 * 
 	 * 	Identifier(char first);
 	 * 	PRE - 
-	 * 	POST - A new Identifier object is created, containing the given character.
+	 * 	POST - A new Identifier object is created, containing the given character. Identifier starts with 
+	 *         letter, and may only have letters/numbers.   
 	 */
 	
 	void init();
