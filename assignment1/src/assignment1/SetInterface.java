@@ -32,7 +32,7 @@ public interface SetInterface {
 	
 	Identifier get();
 	/*	PRE - The Set contains at least one object.
-	 * 	POST - The last element added is returned.
+	 * 	POST - A random element is returned.
 	 */
 	
 	void remove(Identifier input);
