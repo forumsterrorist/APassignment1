@@ -115,11 +115,23 @@ public class Set implements SetInterface {
 		
 		return false;
 	}
+	
+	public boolean exists(Identifier input) {
+		for (Identifier i : set) {
+			if (i.equals(input) == false) {
+				return false;
+			}
+		}
+		
+		
+		return true;
+	}
 
 	@Override
-	public SetInterface union(Set input) {
+	public SetInterface union(Set input) throws Exception {
 		if (input.size() + setSize > 20) {
-			
+			Exception SetSizeException = new Exception("Result would be too large!");
+			throw SetSizeException;
 		}
 		
 		
@@ -146,5 +158,4 @@ public class Set implements SetInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 }

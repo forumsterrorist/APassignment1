@@ -55,7 +55,7 @@ public interface SetInterface {
 	 *	POST - Returns true if the input is contained within the Set and false otherwise. 
 	 */
 	
-	SetInterface union(Set input);
+	SetInterface union(Set input) throws Exception;
 	/*	PRE - The sum of the sizes of each Set does not exceed 20.
 	 *	POST - Returns a Set containing the union of the input Set and this Set. 
 	 */
