@@ -70,7 +70,7 @@ public interface SetInterface {
 	 *	POST - Returns a Set containing the difference of the input Set and this Set. 
 	 */
 	
-	SetInterface symmetricDifference(Set input);
+	SetInterface symmetricDifference(Set input) throws Exception;
 	/*	PRE - Both the Set and the input Set have been initialized.
 	 *	POST - Returns a Set containing the symmetric difference of the input Set and this Set. 
 	 */

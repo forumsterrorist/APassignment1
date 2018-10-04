@@ -1,76 +1,6 @@
 package assignment1;
 
-<<<<<<< HEAD
 import java.util.Random;
-=======
-public class Set implements SetInterface{
-
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void add(Identifier input) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Identifier[] get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Identifier getAt(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean equals(Set input) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean contains(Identifier input) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Set union(Set input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set intersection(Set input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set difference(Set input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set symmetricDifference(Set input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
->>>>>>> 2bb47ba79f2beac8087d01aced9d1a6aed2d1aec
 
 public class Set implements SetInterface {
 	
@@ -155,20 +85,9 @@ public class Set implements SetInterface {
 
 	@Override
 	public boolean equals(Set input) {
-		Identifier[] buffer = new Identifier[input.size()];
-		int bufferIndex = 0;
-		
-		while (input.size() > 0) {
-			buffer[bufferIndex] = input.get();
-			input.remove(buffer[bufferIndex]);
-			bufferIndex++;
-		}
-		
 		for (Identifier i : set) {
-			for (int j = 0; j < buffer.length - 1; j++) {
-				if (i.equals(buffer[j]) == false) {
-					return false;
-				}
+			if (!input.contains(i)) {
+				return false;
 			}
 		}
 		
@@ -188,11 +107,10 @@ public class Set implements SetInterface {
 	
 	public boolean exists(Identifier input) {
 		for (Identifier i : set) {
-			if (i.equals(input) == false) {
+			if (!i.equals(input)) {
 				return false;
 			}
 		}
-		
 		
 		return true;
 	}
@@ -204,28 +122,63 @@ public class Set implements SetInterface {
 			throw SetSizeException;
 		}
 		
-		
 		SetInterface temp = new Set(input);
 		
+		for (Identifier i : set) {
+			temp.add(i);
+		}
 		
 		return temp;
 	}
 
 	@Override
 	public SetInterface intersection(Set input) {
-		// TODO Auto-generated method stub
-		return null;
+		SetInterface temp = new Set();
+		
+		for (Identifier i : set) {
+			if (input.contains(i)) {
+				temp.add(i);
+			}
+		}
+		
+		return temp;
 	}
 
 	@Override
 	public SetInterface difference(Set input) {
-		// TODO Auto-generated method stub
-		return null;
+		SetInterface temp = new Set();
+		
+		for (Identifier i : set) {
+			if (input.contains(i)) {
+				continue;
+			} else {
+				temp.add(i);
+			}
+		}
+		
+		return temp;
 	}
 
 	@Override
-	public SetInterface symmetricDifference(Set input) {
-		// TODO Auto-generated method stub
-		return null;
+	public SetInterface symmetricDifference(Set input) throws Exception{
+		SetInterface temp = new Set(input);
+		int counter = 0;
+		
+		for (Identifier i : set) {
+			if (temp.contains(i)) {
+				temp.remove(i);
+				counter--;
+			} else {
+				temp.add(i);
+				counter++;
+			}
+			
+			if (counter > 20) {
+				Exception SetSizeException = new Exception("Resulting set would be too large!");
+				throw SetSizeException;
+			}
+		}
+		
+		return temp;
 	}
 }
