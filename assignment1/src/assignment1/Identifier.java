@@ -1,7 +1,11 @@
 package assignment1;
 
 public abstract class Identifier implements IdentifierInterface {
-	String identifierString = "";
+	private String identifierString;
+	
+	Identifier(char first){
+		init(first);
+	}
 	
 	@Override
 	public void init(char first) {
@@ -24,21 +28,21 @@ public abstract class Identifier implements IdentifierInterface {
 
 	@Override
 	public boolean equals(Identifier input) {
-	/*  if(identifierString == input) {
-	 *		return true;
-	 *	}
-	 *	
-	 *	else { 
-	 *		return false;
-	 *	} 
-	 */
-	}
+		String TempIdentifierString = input.get(); 
+		if(TempIdentifierString == identifierString) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	} 
 
 	@Override
 	public int size() {
-		if (identifierString.length() >= 1) {
-			return identifierString.length();
+		if (identifierString.length() < 1) {
+			return 0;// Empty string, so return 0.
 		}
+		return identifierString.length();
 	}
 
 } 
