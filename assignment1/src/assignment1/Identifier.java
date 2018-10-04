@@ -1,35 +1,44 @@
 package assignment1;
 
-public class Identifier implements IdentifierInterface {
-
+public abstract class Identifier implements IdentifierInterface {
+	String identifierString = "";
+	
 	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void init(char first) {
+		if(Character.isLetter(first)) { //First char has to be a letter, so we check this input.
+			identifierString += first; //if the char is a letter, we load it into the string
+		}
+	} 
+	
 	@Override
 	public void add(char toAdd) {
-		// TODO Auto-generated method stub
-		
+		if(Character.isLetterOrDigit(toAdd)) { //If the char is a letter or digit, then PRE is met.
+			identifierString += toAdd; //add the character to the string.
+		}
 	}
 
 	@Override
 	public String get() {
-		// TODO Auto-generated method stub
-		return null;
+		return identifierString;
 	}
 
 	@Override
 	public boolean equals(Identifier input) {
-		// TODO Auto-generated method stub
-		return false;
+	/*  if(identifierString == input) {
+	 *		return true;
+	 *	}
+	 *	
+	 *	else { 
+	 *		return false;
+	 *	} 
+	 */
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		if (identifierString.length() >= 1) {
+			return identifierString.length();
+		}
 	}
 
-}
+} 
