@@ -1,38 +1,95 @@
 package assignment1;
 
-import java.util.*;
 import java.util.Scanner;
 import java.io.PrintStream;
-import java.util.regex.Pattern;
 
 public class main{
     static final int MAX_NUMBER_OF_ELEMENTS = 10;
-    PrintStream out;
+    static PrintStream out;
 
-    boolean askSet (Scanner input, String question, Set set) {
-        do {
+    public static boolean askSet (Scanner input, String question, Set set) {
+        do{
             out.printf("%s", question);
-            if (! input.hasNextLine()) {
+            if (!input.hasNextLine()) {
                 out.printf("\n"); // otherwise line with ^D will be overwritten
                 return false;
             }
-        } while (!inputContainsCorrectSet(input, set));
+        } 
+        while (!inputContainsCorrectSet(input, set));
         return true;
     }
 
 
-	private boolean inputContainsCorrectSet(Scanner input, Set set) {
-		// TODO Auto-generated method stub
-		return false;
+	private static boolean inputContainsCorrectSet(Scanner input, Set set) {
+		if(input.next().charAt(0) != '{') { //Input has to start with {, otherwise invalid input.
+            out.printf("missing {\n"); 
+            return false; //We return false, which means that the input is incorrect.
+        }
+		while (input.hasNext()) { //if first char = {, and there are more chars, then execute while loop.
+			char characterToAdd = input.next().charAt(0);
+			Identifier identifier = new Identifier(); 
+            boolean newIdentifier = true;  
+            System.out.println(input.hasNext());
+            if (!Character.isLetterOrDigit(characterToAdd) || !Character.isWhitespace(characterToAdd)) {	
+            	if(input.hasNext()){
+                    out.printf("Only alpanumeric characters\n");
+                } 
+            	else{
+            		if(characterToAdd != '}'){
+                        out.printf("missing }\n");
+                    }
+                }
+                return false;
+            }
+            else if (Character.isWhitespace(characterToAdd)){
+                if(newIdentifier == false){   
+                    identifier.init(characterToAdd);
+                    set.add(identifier);
+                }
+                newIdentifier = true;
+            }
+            else {
+                if(newIdentifier = true){
+                    if(!Character.isLetter(characterToAdd)){
+                        out.printf("first character should be a letter");
+                        return false;
+                    }
+                    identifier.add(characterToAdd);
+                    newIdentifier = false;
+                } 
+                else {
+                    identifier.add(characterToAdd);
+                }
+            }      	
+		}
+		return true;
 	}
+       
 
-
-	boolean askBothSets (Scanner input, Set set1, Set set2) {
+	static boolean  askBothSets (Scanner input, Set set1, Set set2){
         return askSet(input, "Give first set : ", set1) &&
                askSet(input, "Give second set : ", set2);
     }
-
-    void start () {
+	
+	private static void calculateAndGiveOutput(Set set1, Set set2){
+		try {
+			set1.union(set2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        set1.intersection(set2);
+        set1.difference(set2);
+        try {
+			set1.symmetricDifference(set2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+    static void start () {
         Scanner in = new Scanner(System.in);
         Set set1 = new Set(),
             set2 = new Set();
@@ -41,11 +98,10 @@ public class main{
             calculateAndGiveOutput(set1, set2);
         }
     }
-
-
-	private void calculateAndGiveOutput(Set set1, Set set2) {
-		
-	}
+    public static void main(String[] args) {
+        out = new PrintStream(System.out);
+        main.start();
+    }
 }
 
 

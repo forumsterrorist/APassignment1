@@ -9,20 +9,20 @@ public interface IdentifierInterface {
 	 * 
 	 * 	Identifier();
 	 * 	PRE - 
-<<<<<<< HEAD
+
 	 * 	POST - A new Identifier object is created of length 1, starting with a letter.
 	 * 
 	 * 	Identifier(char first);
 	 * 	PRE - 
 	 * 	POST - A new Identifier object is created, containing the given character. Identifier starts with 
 	 *         letter, and may only have letters/numbers.   
-=======
+
 	 * 	POST - A new Identifier object is created, containing the character literal 'a'.
 	 * 
 	 * 	Identifier(char first);
 	 * 	PRE - The character given lies within the domain.
 	 * 	POST - A new Identifier object is created, containing the given character.
->>>>>>> 1c38ec6fea3561028dbadfb3f97f8f62ec47d037
+
 	 */
 	
 	void init(char first);
