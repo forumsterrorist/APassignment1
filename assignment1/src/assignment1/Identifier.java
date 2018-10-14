@@ -1,9 +1,14 @@
 package assignment1;
 
-public abstract class Identifier implements IdentifierInterface {
+public class Identifier implements IdentifierInterface {
 	private String identifierString;
 	
+	Identifier() {
+		identifierString = "";
+	}
+	
 	Identifier(char first){
+		identifierString = "";
 		init(first);
 	}
 	
@@ -43,6 +48,11 @@ public abstract class Identifier implements IdentifierInterface {
 			return 0;// Empty string, so return 0.
 		}
 		return identifierString.length();
+	}
+
+	@Override
+	public char getAt(int index) {
+		return identifierString.charAt(index);
 	}
 
 } 

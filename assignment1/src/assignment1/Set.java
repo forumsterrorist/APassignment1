@@ -1,11 +1,11 @@
 package assignment1;
 
-import java.util.Random;
-
 public class Set implements SetInterface {
 	
 	private Identifier[] set;
 	private int setSize;
+	private int top;
+	private boolean isEmpty;
 	
 	Set() {
 		init();
@@ -17,14 +17,12 @@ public class Set implements SetInterface {
 	}
 	
 	Set(Set inputSet){
-		Identifier temp;
-		
+		Identifier[] temp = inputSet.getAsArray();
 		init();
 		
-		while (inputSet.size() > 0) {
-			temp = inputSet.get();
-			add(temp);
-			inputSet.remove(temp);
+		for (int i = 0; i < temp.length; i++) {
+			add(temp[i]);
+			System.out.println(set[i]);
 		}
 	}
 
@@ -32,50 +30,71 @@ public class Set implements SetInterface {
 	public void init() {
 		set = new Identifier[1];
 		setSize = 0;
+		top = 0;
+		isEmpty = true;
+		return;
 	}
 	
 	private void expand() {
-		Identifier[] temp = new Identifier[setSize + 1];
+		Identifier[] temp = new Identifier[set.length + 1];
 		
 		for (int i = 0; i < set.length; i++) {
 			temp[i] = set[i];
 		}
 		
 		set = temp;
+		return;
 	}
 
 	@Override
 	public void add(Identifier input) {
-		if (setSize == set.length) {
-			expand();
+		if (isEmpty) {
+			set[0] = input;
+			setSize++;
+			isEmpty = false;
+			return;
+		} else {
+			if (top == set.length - 1) {
+				expand();
+			}
+			top++;
+			set[top] = input;
+			setSize++;
 		}
 		
-		set[setSize - 1] = input;
+		return;
 	}
 
 	@Override
 	public Identifier get() {
-		Identifier temp;
-		Random rand = new Random();
-		
-		temp = set[rand.nextInt(setSize + 1)];
-		
-		return temp;
+		return set[top];
 	}
 
 	@Override
 	public void remove(Identifier input) {
-		Identifier[] temp = new Identifier[setSize - 1];
-		
-		for (int i = 0; i < set.length; i++) {
-			if (set[i] == input) {
-				continue;
-			}
-			temp[i] = set[i];
+		if (isEmpty) {
+			return;
 		}
 		
-		set = temp;
+		top = 0;
+		Identifier[] temp = new Identifier[setSize - 1];
+		
+		for (int i = 0; i < top; i++) {
+			if (set[i].equals(input)) {
+				continue;
+			} else {
+				temp[top] = set[i];
+				top++;
+			}
+		}
+		
 		setSize--;
+		
+		if (setSize == 0) {
+			isEmpty = true;
+		}
+		
+		return;
 	}
 
 	@Override
@@ -85,34 +104,30 @@ public class Set implements SetInterface {
 
 	@Override
 	public boolean equals(Set input) {
-		for (Identifier i : set) {
-			if (!input.contains(i)) {
-				return false;
+		boolean output = true;
+		
+		for (int i = 0; i < set.length; i++) {
+			if (!input.contains(set[i])) {
+				output = false;
 			}
 		}
 		
-		return true;
+		return output;
 	}
 
 	@Override
 	public boolean contains(Identifier input) {
-		for (Identifier i : set) {
-			if (i.equals(input)) {
+		if (isEmpty) {
+			return false;
+		}
+		
+		for (int i = 0; i < set.length; i++) {
+			if (set[i].equals(input)) {
 				return true;
 			}
 		}
 		
 		return false;
-	}
-	
-	public boolean exists(Identifier input) {
-		for (Identifier i : set) {
-			if (!i.equals(input)) {
-				return false;
-			}
-		}
-		
-		return true;
 	}
 
 	@Override
@@ -123,9 +138,10 @@ public class Set implements SetInterface {
 		}
 		
 		SetInterface temp = new Set(input);
+		System.out.println(temp.toString());
 		
-		for (Identifier i : set) {
-			temp.add(i);
+		for (int i = 0; i < set.length; i++) {
+			temp.add(set[i]);
 		}
 		
 		return temp;
@@ -135,9 +151,9 @@ public class Set implements SetInterface {
 	public SetInterface intersection(Set input) {
 		SetInterface temp = new Set();
 		
-		for (Identifier i : set) {
-			if (input.contains(i)) {
-				temp.add(i);
+		for (int i = 0; i < set.length; i++) {
+			if (input.contains(set[i])) {
+				temp.add(set[i]);
 			}
 		}
 		
@@ -148,11 +164,11 @@ public class Set implements SetInterface {
 	public SetInterface difference(Set input) {
 		SetInterface temp = new Set();
 		
-		for (Identifier i : set) {
-			if (input.contains(i)) {
+		for (int i = 0; i < set.length; i++) {
+			if (input.contains(set[i])) {
 				continue;
 			} else {
-				temp.add(i);
+				temp.add(set[i]);
 			}
 		}
 		
@@ -164,12 +180,12 @@ public class Set implements SetInterface {
 		SetInterface temp = new Set(input);
 		int counter = 0;
 		
-		for (Identifier i : set) {
-			if (temp.contains(i)) {
-				temp.remove(i);
+		for (int i = 0; i < set.length; i++) {
+			if (temp.contains(set[i])) {
+				temp.remove(set[i]);
 				counter--;
 			} else {
-				temp.add(i);
+				temp.add(set[i]);
 				counter++;
 			}
 			
@@ -180,5 +196,27 @@ public class Set implements SetInterface {
 		}
 		
 		return temp;
+	}
+	
+	public String toString() {
+		String output = "";
+		
+		if (isEmpty) {
+			return output;
+		} else {
+			for (int i = 0; i < setSize - 1; i++) {
+				output = output + set[i].get() + " ";
+			}
+		}
+		
+		return output;
+	}
+	
+	public boolean isEmpty() {
+		return isEmpty;
+	}
+	
+	public Identifier[] getAsArray() {
+		return set;
 	}
 }

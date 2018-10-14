@@ -21,47 +21,44 @@ public class main{
 
 
 	private static boolean inputContainsCorrectSet(Scanner input, Set set) {
-		if(input.next().charAt(0) != '{') { //Input has to start with {, otherwise invalid input.
-            out.printf("missing {\n"); 
-            return false; //We return false, which means that the input is incorrect.
-        }
-		while (input.hasNext()) { //if first char = {, and there are more chars, then execute while loop.
-			char characterToAdd = input.next().charAt(0);
-			Identifier identifier = new Identifier(); 
-            boolean newIdentifier = true;  
-            System.out.println(input.hasNext());
-            if (!Character.isLetterOrDigit(characterToAdd) || !Character.isWhitespace(characterToAdd)) {	
-            	if(input.hasNext()){
-                    out.printf("Only alpanumeric characters\n");
-                } 
-            	else{
-            		if(characterToAdd != '}'){
-                        out.printf("missing }\n");
-                    }
-                }
-                return false;
-            }
-            else if (Character.isWhitespace(characterToAdd)){
-                if(newIdentifier == false){   
-                    identifier.init(characterToAdd);
-                    set.add(identifier);
-                }
-                newIdentifier = true;
-            }
-            else {
-                if(newIdentifier = true){
-                    if(!Character.isLetter(characterToAdd)){
-                        out.printf("first character should be a letter");
-                        return false;
-                    }
-                    identifier.add(characterToAdd);
-                    newIdentifier = false;
-                } 
-                else {
-                    identifier.add(characterToAdd);
-                }
-            }      	
+		set = new Set();
+		String temp = input.nextLine();
+		String identifierCandidate;
+		Identifier identifier;
+		Scanner process;
+		
+		if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
+			temp = temp.substring(1, temp.length() - 1);
+			process = new Scanner(temp);
+		} else if (temp.isEmpty()) {
+			return false;
+		} else {
+			out.println("Input missing { or }");
+			return false;
 		}
+		
+		while (process.hasNext()) {
+			identifierCandidate = process.next();
+			if (!Character.isLetter(identifierCandidate.charAt(0))) {
+				out.println("One or more identifiers invalid");
+				process.close();
+				return false;
+			} else {
+				identifier = new Identifier(identifierCandidate.charAt(0));
+				for (char i : identifierCandidate.substring(1).toCharArray()) {
+					if (!Character.isLetterOrDigit(i)) {
+						out.println("One or more identifiers invalid");
+						process.close();
+						return false;
+					} else {
+						identifier.add(i);
+					}
+				}
+				set.add(identifier);
+			}
+		}
+		
+		process.close();
 		return true;
 	}
        
@@ -72,16 +69,18 @@ public class main{
     }
 	
 	private static void calculateAndGiveOutput(Set set1, Set set2){
+		
 		try {
-			set1.union(set2);
+			out.println("Union: {" + set1.union(set2).toString() + "}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        set1.intersection(set2);
-        set1.difference(set2);
+		
+		out.println("Intersection: {" + set1.intersection(set2).toString() + "}");
+		out.println("Difference: {" + set1.difference(set2).toString() + "}");
         try {
-			set1.symmetricDifference(set2);
+        	out.println("Symmetric difference: {" + set1.symmetricDifference(set2).toString() + "}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
