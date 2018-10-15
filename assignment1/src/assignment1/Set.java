@@ -3,39 +3,40 @@ package assignment1;
 public class Set implements SetInterface {
 	
 	private Identifier[] set;
-	private int setSize;
 	private int top;
-	private boolean isEmpty;
 	
 	Set() {
 		init();
 	}
 	
-	Set(Identifier first){
+	Set(Identifier input) {
 		init();
-		add(first);
+		add(input);
 	}
 	
-	Set(Set inputSet){
-		Identifier[] temp = inputSet.getAsArray();
-		init();
-		
-		for (int i = 0; i < temp.length; i++) {
-			add(temp[i]);
-			System.out.println(set[i]);
-		}
+	Set(Set input) {
+		this.set = input.set;
+		this.top = input.top;
 	}
+	
+	
 
 	@Override
 	public void init() {
 		set = new Identifier[1];
-		setSize = 0;
-		top = 0;
-		isEmpty = true;
-		return;
+		set[0] = new Identifier('0');
+		top = -1;
 	}
 	
-	private void expand() {
+	public boolean isEmpty() {
+		if (top == -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private void grow() {
 		Identifier[] temp = new Identifier[set.length + 1];
 		
 		for (int i = 0; i < set.length; i++) {
@@ -43,26 +44,17 @@ public class Set implements SetInterface {
 		}
 		
 		set = temp;
-		return;
 	}
 
 	@Override
 	public void add(Identifier input) {
-		if (isEmpty) {
-			set[0] = input;
-			setSize++;
-			isEmpty = false;
-			return;
-		} else {
-			if (top == set.length - 1) {
-				expand();
+			if (this.contains(input)) {
+				return;
+			} else if (top == set.length - 1) {
+				grow();
 			}
 			top++;
 			set[top] = input;
-			setSize++;
-		}
-		
-		return;
 	}
 
 	@Override
@@ -72,57 +64,51 @@ public class Set implements SetInterface {
 
 	@Override
 	public void remove(Identifier input) {
-		if (isEmpty) {
-			return;
-		}
+		Identifier[] temp = new Identifier[set.length - 1];
 		
-		top = 0;
-		Identifier[] temp = new Identifier[setSize - 1];
+		int counter = 0;
 		
-		for (int i = 0; i < top; i++) {
+		for (int i = 0; i < temp.length; i++) {
 			if (set[i].equals(input)) {
 				continue;
 			} else {
-				temp[top] = set[i];
-				top++;
+				temp[counter] = set[i];
+				counter++;
 			}
 		}
 		
-		setSize--;
-		
-		if (setSize == 0) {
-			isEmpty = true;
-		}
-		
-		return;
+		set = temp;
+		top--;
 	}
 
 	@Override
 	public int size() {
-		return setSize;
+		return set.length;
 	}
 
 	@Override
 	public boolean equals(Set input) {
-		boolean output = true;
+		Set temp = new Set(input);
+		Identifier compare;
 		
-		for (int i = 0; i < set.length; i++) {
-			if (!input.contains(set[i])) {
-				output = false;
+		for (int i = 0; i < top; i++) {
+			compare = temp.get();
+			temp.remove(compare);
+			if (!compare.equals(set[i])) {
+				return false;
 			}
 		}
 		
-		return output;
+		return true;
 	}
 
 	@Override
 	public boolean contains(Identifier input) {
-		if (isEmpty) {
-			return false;
-		}
 		
 		for (int i = 0; i < set.length; i++) {
-			if (set[i].equals(input)) {
+			if (set[i] == null) {
+				continue;
+			} else if (set[i].equals(input)) {
 				return true;
 			}
 		}
@@ -131,92 +117,81 @@ public class Set implements SetInterface {
 	}
 
 	@Override
-	public SetInterface union(Set input) throws Exception {
-		if (input.size() + setSize > 20) {
-			Exception SetSizeException = new Exception("Result would be too large!");
-			throw SetSizeException;
+	public SetInterface union(Set input) {
+		SetInterface output = new Set();
+		
+		for (Identifier i : set) {
+			output.add(i);
 		}
 		
-		SetInterface temp = new Set(input);
-		System.out.println(temp.toString());
-		
-		for (int i = 0; i < set.length; i++) {
-			temp.add(set[i]);
+		for (Identifier j : input.set) {
+			output.add(j);
 		}
 		
-		return temp;
+		return output;
 	}
 
 	@Override
 	public SetInterface intersection(Set input) {
-		SetInterface temp = new Set();
+		SetInterface output = new Set();
 		
-		for (int i = 0; i < set.length; i++) {
-			if (input.contains(set[i])) {
-				temp.add(set[i]);
-			}
-		}
-		
-		return temp;
-	}
-
-	@Override
-	public SetInterface difference(Set input) {
-		SetInterface temp = new Set();
-		
-		for (int i = 0; i < set.length; i++) {
-			if (input.contains(set[i])) {
-				continue;
-			} else {
-				temp.add(set[i]);
-			}
-		}
-		
-		return temp;
-	}
-
-	@Override
-	public SetInterface symmetricDifference(Set input) throws Exception{
-		SetInterface temp = new Set(input);
-		int counter = 0;
-		
-		for (int i = 0; i < set.length; i++) {
-			if (temp.contains(set[i])) {
-				temp.remove(set[i]);
-				counter--;
-			} else {
-				temp.add(set[i]);
-				counter++;
-			}
-			
-			if (counter > 20) {
-				Exception SetSizeException = new Exception("Resulting set would be too large!");
-				throw SetSizeException;
-			}
-		}
-		
-		return temp;
-	}
-	
-	public String toString() {
-		String output = "";
-		
-		if (isEmpty) {
-			return output;
-		} else {
-			for (int i = 0; i < setSize - 1; i++) {
-				output = output + set[i].get() + " ";
+		for (Identifier i : set) {
+			if (input.contains(i)) {
+				output.add(i);
 			}
 		}
 		
 		return output;
 	}
-	
-	public boolean isEmpty() {
-		return isEmpty;
+
+	@Override
+	public SetInterface difference(Set input) {
+		SetInterface output = new Set();
+		
+		for (Identifier i : set) {
+			if (!input.contains(i)) {
+				output.add(i);
+			}
+		}
+		
+		return output;
+	}
+
+	@Override
+	public SetInterface symmetricDifference(Set input) {
+		SetInterface output = new Set();
+		
+		for (Identifier i : set) {
+			if (!input.contains(i)) {
+				output.add(i);;
+			}
+		}
+		
+		for (Identifier i : input.set) {
+			if (!this.contains(i)) {
+				output.add(i);
+			} 
+		}
+		
+		return output;
 	}
 	
-	public Identifier[] getAsArray() {
-		return set;
+	public String toString() {
+		StringBuilder output = new StringBuilder(" ");
+		
+		if (isEmpty()) {
+			return output.toString();
+		} else if (top == 0) {
+			output.append(set[0].get());
+			output.append(' ');
+			return output.toString();
+		}
+		
+		for (Identifier i : set) {
+			output.append(i.get());
+			output.append(" ");
+		}
+		
+		return output.toString();
 	}
 }

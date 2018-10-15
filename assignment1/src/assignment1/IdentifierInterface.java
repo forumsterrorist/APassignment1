@@ -7,22 +7,12 @@ public interface IdentifierInterface {
 	 * 	
 	 * 	Constructors:
 	 * 
-	 * 	Identifier();
-	 * 	PRE - 
-
-	 * 	POST - A new Identifier object is created of length 1, starting with a letter.
-	 * 
 	 * 	Identifier(char first);
 	 * 	PRE - 
 	 * 	POST - A new Identifier object is created, containing the given character. Identifier starts with 
 	 *         letter, and may only have letters/numbers.   
 
 	 * 	POST - A new Identifier object is created, containing the character literal 'a'.
-	 * 
-	 * 	Identifier(char first);
-	 * 	PRE - The character given lies within the domain.
-	 * 	POST - A new Identifier object is created, containing the given character.
-
 	 */
 	
 	void init(char first);
