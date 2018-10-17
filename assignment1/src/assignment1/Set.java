@@ -131,10 +131,10 @@ public class Set implements SetInterface {
 	}
 
 	@Override
-	public SetInterface union(Set input) throws Exception {
+	public SetInterface union(Set input) {
 		if (input.size() + setSize > 20) {
 			Exception SetSizeException = new Exception("Result would be too large!");
-			throw SetSizeException;
+			//throw SetSizeException;
 		}
 		
 		SetInterface temp = new Set(input);
@@ -176,7 +176,7 @@ public class Set implements SetInterface {
 	}
 
 	@Override
-	public SetInterface symmetricDifference(Set input) throws Exception{
+	public SetInterface symmetricDifference(Set input){
 		SetInterface temp = new Set(input);
 		int counter = 0;
 		
@@ -191,7 +191,7 @@ public class Set implements SetInterface {
 			
 			if (counter > 20) {
 				Exception SetSizeException = new Exception("Resulting set would be too large!");
-				throw SetSizeException;
+				//throw SetSizeException;
 			}
 		}
 		

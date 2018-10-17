@@ -3,10 +3,6 @@ package assignment1;
 public class Identifier implements IdentifierInterface {
 	private String identifierString;
 	
-	Identifier() {
-		identifierString = "";
-	}
-	
 	Identifier(char first){
 		identifierString = "";
 		init(first);
@@ -34,7 +30,7 @@ public class Identifier implements IdentifierInterface {
 	@Override
 	public boolean equals(Identifier input) {
 		String TempIdentifierString = input.get(); 
-		if(TempIdentifierString == identifierString) {
+		if(TempIdentifierString.equals(identifierString)) {
 			return true;
 		}
 		else {

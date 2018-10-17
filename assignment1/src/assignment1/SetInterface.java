@@ -55,7 +55,7 @@ public interface SetInterface {
 	 *	POST - Returns true if the input is contained within the Set and false otherwise. 
 	 */
 	
-	SetInterface union(Set input) throws Exception;
+	SetInterface union(Set input);
 	/*	PRE - The sum of the sizes of each Set does not exceed 20.
 	 *	POST - Returns a Set containing the union of the input Set and this Set. 
 	 */
@@ -70,7 +70,7 @@ public interface SetInterface {
 	 *	POST - Returns a Set containing the difference of the input Set and this Set. 
 	 */
 	
-	SetInterface symmetricDifference(Set input) throws Exception;
+	SetInterface symmetricDifference(Set input);
 	/*	PRE - Both the Set and the input Set have been initialized.
 	 *	POST - Returns a Set containing the symmetric difference of the input Set and this Set. 
 	 */

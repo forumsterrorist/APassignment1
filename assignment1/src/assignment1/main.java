@@ -21,19 +21,21 @@ public class main{
 
 
 	private static boolean inputContainsCorrectSet(Scanner input, Set set) {
-		set = new Set();
 		String temp = input.nextLine();
 		String identifierCandidate;
 		Identifier identifier;
 		Scanner process;
+		int counter = 0;
 		
-		if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
+		if (temp.isEmpty()) {
+			set = new Set();
+			return false;
+		} else if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
 			temp = temp.substring(1, temp.length() - 1);
 			process = new Scanner(temp);
-		} else if (temp.isEmpty()) {
-			return false;
 		} else {
 			out.println("Input missing { or }");
+			set = new Set();
 			return false;
 		}
 		
@@ -42,6 +44,7 @@ public class main{
 			if (!Character.isLetter(identifierCandidate.charAt(0))) {
 				out.println("One or more identifiers invalid");
 				process.close();
+				set = new Set();
 				return false;
 			} else {
 				identifier = new Identifier(identifierCandidate.charAt(0));
@@ -49,12 +52,22 @@ public class main{
 					if (!Character.isLetterOrDigit(i)) {
 						out.println("One or more identifiers invalid");
 						process.close();
+						set = new Set();
 						return false;
 					} else {
 						identifier.add(i);
 					}
 				}
 				set.add(identifier);
+			}
+			
+			if (counter == 10) {
+				out.println("Input set too large");
+				process.close();
+				set = new Set();
+				return false;
+			} else {
+				counter++;
 			}
 		}
 		
@@ -84,7 +97,24 @@ public class main{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+<<<<<<< HEAD
 		}
+=======
+		}*/
+		SetInterface set3;
+		
+		set3 = set1.union(set2);
+		out.println("Union: {" + set3.toString() + "}");
+		set3 = set1.intersection(set2);
+		out.println("Intersection: {" + set3.toString() + "}");
+		set3 = set1.difference(set2);
+		out.println("Difference: {" + set3.toString() + "}");
+		set3 = set1.symmetricDifference(set2);
+        out.println("Symmetric difference: {" + set3.toString() + "}");
+		
+		set1.init();
+		set2.init();
+>>>>>>> parent of 7f8ab0f... Revert "prevCode"
 		
 	}
 	
