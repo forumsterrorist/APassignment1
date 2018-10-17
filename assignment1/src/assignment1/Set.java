@@ -136,6 +136,7 @@ public class Set implements SetInterface {
 			Exception SetSizeException = new Exception("Result would be too large!");
 			throw SetSizeException;
 		}
+		
 		SetInterface temp = new Set(input);
 		System.out.println(temp.toString());
 		

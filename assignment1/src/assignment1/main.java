@@ -68,24 +68,25 @@ public class main{
                askSet(input, "Give second set : ", set2);
     }
 	
-	
 	private static void calculateAndGiveOutput(Set set1, Set set2){
-		/*try {
+		
+		try {
 			out.println("Union: {" + set1.union(set2).toString() + "}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		out.println("Intersection: {" + set1.intersection(set2).toString() + "}");
 		out.println("Difference: {" + set1.difference(set2).toString() + "}");
         try {
-			out.println("Symmetric difference: {" + set1.symmetricDifference(set2).toString() + "}");
+        	out.println("Symmetric difference: {" + set1.symmetricDifference(set2).toString() + "}");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
+		
 	}
-	
 	
     static void start () {
         Scanner in = new Scanner(System.in);
